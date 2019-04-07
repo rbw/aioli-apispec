@@ -1,0 +1,18 @@
+# -*- coding: utf-8 -*-
+
+from aioli.utils import jsonify
+from aioli.controller import BaseController, route
+from .service import APISpecService
+
+
+class Controller(BaseController):
+    def __init__(self):
+        self.service = APISpecService()
+
+    @route('/', 'GET')
+    async def packages_get(self, _):
+        return jsonify(await self.service.get_pkgs())
+
+    @route('/<package_name>', 'GET')
+    async def package_get(self, _, package_name):
+        return jsonify(await self.service.get_pkg(package_name))
