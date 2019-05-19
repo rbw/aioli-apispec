@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from aioli.utils import jsonify
-from aioli.controller import BaseController, route
-from .service import APISpecService
+from aioli.utils.http import jsonify
+from aioli.package.controller import BaseHttpController, route
+from .service import ApiSpecService
 
 
-class Controller(BaseController):
+class HttpController(BaseHttpController):
     def __init__(self):
-        self.service = APISpecService()
+        self.service = ApiSpecService()
 
     @route('/', 'GET')
     async def packages_get(self, _):
@@ -16,3 +16,4 @@ class Controller(BaseController):
     @route('/<package_name>', 'GET')
     async def package_get(self, _, package_name):
         return jsonify(await self.service.get_pkg(package_name))
+
